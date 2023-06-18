@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo list</title>
-</head>
-<body>
+{% extends 'todo/layout.html' %}
+
+{% block body %}
     
     <h1>Lista de tareas</h1>
 <ul>
@@ -14,6 +9,6 @@
         {% endfor %}
 </ul>
 
+<a href="{%url 'add'%}">Agregar Tarea</a>
 
-</body>
-</html>
+{% endblock %}
