@@ -21,3 +21,10 @@ def add(request):
         form = AgregarTarea()
         context = {'form' : form}
         return render(request, "todo/add.html", context)
+    
+
+
+def delete(request, index):
+    if index < len(tareas):
+        tareas.pop(index)
+    return redirect('home')

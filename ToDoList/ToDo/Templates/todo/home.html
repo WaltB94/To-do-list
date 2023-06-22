@@ -4,11 +4,25 @@
     <div class="box">
     <h1 class="box-title">Lista de tareas</h1>
 <ul class="box-list" >
-        {% for tarea in tareas %}
-        <li>{{tarea}}</li>
-        {% endfor %}
+    {% for tarea in tareas %}
+    <li>
+        {{ tarea }}
+        <form action="{% url 'delete' index=forloop.counter0 %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit">Eliminar</button>
+        </form>
+    </li>
+    
+{% endfor %}
+
 </ul>
 
 <a href="{%url 'add'%}" class="box-description">Agregar Tarea</a>
 </div>
 {% endblock %}
+
+
+
+
+
+
