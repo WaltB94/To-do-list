@@ -1,13 +1,19 @@
 from django.shortcuts import render, redirect
-from .forms import AgregarTarea
+from .forms import AgregarTarea, CompletarTarea
 
 # Create your views here.
 
 tareas = []
+tareas_completadas = []
+
 
 def home(request):
-    context = {'tareas': tareas}
+    form_completar = CompletarTarea(tareas=tareas)
+    context = {'tareas': tareas, 'tareas_completadas': tareas_completadas, 'form_completar': form_completar}
     return render(request, "todo/home.html", context)
+
+
+
 
 
 def add(request):
@@ -27,4 +33,17 @@ def add(request):
 def delete(request, index):
     if index < len(tareas):
         tareas.pop(index)
+    return redirect('home')
+
+
+def confirmar_completadas(request):
+    return redirect('home')
+
+
+
+
+def completar_tarea(request, index):
+    if index < len(tareas):
+        tarea_completada = tareas.pop(index)
+        tareas_completadas.append(tarea_completada)
     return redirect('home')
