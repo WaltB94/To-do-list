@@ -9,24 +9,19 @@ tareas_completadas = []
 
 def home(request):
     form_completar = CompletarTarea(tareas=tareas)
-    context = {'tareas': tareas, 'tareas_completadas': tareas_completadas, 'form_completar': form_completar}
+    form_agregar = AgregarTarea(request.POST or None)  # Obtener el formulario enviado en la solicitud POST
+    if request.method == 'POST' and form_agregar.is_valid():  # Verificar si se envió el formulario y es válido
+        tarea = form_agregar.cleaned_data["tarea"]
+        tareas.append(tarea)
+        return redirect('home')  # Redirigir a la misma vista para actualizar la lista de tareas
+
+    context = {
+        'tareas': tareas,
+        'tareas_completadas': tareas_completadas,
+        'form_completar': form_completar,
+        'form_agregar': form_agregar,
+    }
     return render(request, "todo/home.html", context)
-
-
-
-
-
-def add(request):
-    if request.method == 'POST':
-        form = AgregarTarea(request.POST)
-        if form.is_valid():
-            tarea = form.cleaned_data["tarea"]
-            tareas.append(tarea)
-            return redirect ('home')
-    else:
-        form = AgregarTarea()
-        context = {'form' : form}
-        return render(request, "todo/add.html", context)
     
 
 
